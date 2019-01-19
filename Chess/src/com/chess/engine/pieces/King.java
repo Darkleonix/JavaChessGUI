@@ -1,21 +1,22 @@
 package com.chess.engine.pieces;
 
-import com.chess.engine.Alliance;
-import com.chess.engine.board.Board;
-import com.chess.engine.board.BoardUtils;
-import com.chess.engine.board.Move;
-import com.chess.engine.board.Tile;
+        import com.chess.engine.Alliance;
+        import com.chess.engine.board.Board;
+        import com.chess.engine.board.BoardUtils;
+        import com.chess.engine.board.Move;
+        import com.chess.engine.board.Tile;
+        import com.google.common.collect.ImmutableList;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.Collection;
+        import java.util.List;
 
 public class King extends Piece{
 
     private final static int[] CANDIDATE_MOVE_VECTOR_COORDINATES = {-9, -8, -7, -1 , 1, 7, 8, 9 };
 
-    public King(int piecePosition, Alliance pieceAlliance) {
-        super(piecePosition, pieceAlliance);
+    public King( final Alliance pieceAlliance, final int piecePosition) {
+        super(PieceType.King, piecePosition, pieceAlliance);
     }
 
     @Override
@@ -46,8 +47,15 @@ public class King extends Piece{
             }
         }
 
-        return null;
+        return ImmutableList.copyOf(legalMoves);
     }
+
+    @Override
+    public King movePiece(final Move move) {
+        return new King( move.getMovePiece().getPieceAlliance(),move.getDesinationCoordinate());
+    }
+
+
 
     @Override
     public String toString(){

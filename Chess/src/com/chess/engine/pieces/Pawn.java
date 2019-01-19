@@ -14,8 +14,8 @@ public class Pawn extends Piece {
 
     private final static int[] CANDIDATE_MOVE_COORDINATE = {8, 16, 7, 9};
 
-    public Pawn(int piecePosition, Alliance pieceAlliance) {
-        super(piecePosition, pieceAlliance);
+    public Pawn(Alliance pieceAlliance, int piecePosition) {
+        super(PieceType.PAWN, piecePosition, pieceAlliance);
     }
 
 
@@ -37,8 +37,8 @@ public class Pawn extends Piece {
 
                 legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
             } else if (currentCandidateOffset == 16 && this.isFirstMove() &&
-                    (BoardUtils.SECOND_ROW[this.piecePosition] && this.getPieceAlliance().isBlack()) ||
-                    (BoardUtils.SECOND_ROW[this.piecePosition] && this.getPieceAlliance().isWhite())) {
+                    (BoardUtils.SECOND_RANK[this.piecePosition] && this.getPieceAlliance().isBlack()) ||
+                    (BoardUtils.SECOND_RANK[this.piecePosition] && this.getPieceAlliance().isWhite())) {
                 final int behindCandidateDestinationCoordinate = this.piecePosition + (this.pieceAlliance.getDirection() * 8);
                 if (!board.getTile(behindCandidateDestinationCoordinate).isTileOccupied() && !board.getTile(candidateDestinationCoordinate).isTileOccupied()) {
                     legalMoves.add(new Move.MajorMove(board, this, candidateDestinationCoordinate));
@@ -69,6 +69,11 @@ public class Pawn extends Piece {
             }
         }
         return ImmutableList.copyOf(legalMoves);
+    }
+
+    @Override
+    public Pawn movePiece(final Move move) {
+        return new Pawn( move.getMovePiece().getPieceAlliance(), move.getDesinationCoordinate());
     }
 
     @Override

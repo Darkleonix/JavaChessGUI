@@ -31,13 +31,17 @@ public abstract class Tile {
     }
 
 
-     private Tile (final int TileCoordinate){
+    private Tile (final int TileCoordinate){
         this.tileCoordinate=TileCoordinate;
     }
 
     public abstract boolean isTileOccupied();
 
     public abstract Piece getPiece();
+
+    public int getTileCoordinate(){
+        return this.tileCoordinate;
+    }
 
     public static final class EmptyTile extends Tile{
 
